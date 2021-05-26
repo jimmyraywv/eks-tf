@@ -6,7 +6,7 @@ module "eks" {
   enable_irsa     = true
   manage_cluster_iam_resources = false
   # cluster_iam_role_name = "admin"
-  workers_role_name = aws_iam_role.worker_node.name
+  workers_role_name = aws_iam_role.worker-node.name
   map_roles    = var.map_roles
 
   tags = {
