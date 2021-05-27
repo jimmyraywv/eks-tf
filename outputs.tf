@@ -32,3 +32,7 @@ output "cluster_name" {
   description = "Kubernetes Cluster Name"
   value       = local.cluster_name
 }
+
+output "worker_node_role_name" {
+  value = aws_iam_role.worker_node.name
+}

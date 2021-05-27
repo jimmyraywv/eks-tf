@@ -1,4 +1,4 @@
-resource "aws_iam_role" "worker-node" {
+resource "aws_iam_role" "worker_node" {
   name = "terraform-eks-worker-node"
 
   assume_role_policy = <<POLICY
@@ -17,32 +17,32 @@ resource "aws_iam_role" "worker-node" {
 POLICY
 }
 
-resource "aws_iam_role_policy_attachment" "worker-node-AmazonEKSWorkerNodePolicy" {
+resource "aws_iam_role_policy_attachment" "worker_node_AmazonEKSWorkerNodePolicy" {
   policy_arn = "arn:aws:iam::aws:policy/AmazonEKSWorkerNodePolicy"
-  role       = "${aws_iam_role.worker-node.name}"
+  role       = "${aws_iam_role.worker_node.name}"
 }
 
-resource "aws_iam_role_policy_attachment" "worker-node-AmazonEKS_CNI_Policy" {
+resource "aws_iam_role_policy_attachment" "worker_node_AmazonEKS_CNI_Policy" {
   policy_arn = "arn:aws:iam::aws:policy/AmazonEKS_CNI_Policy"
-  role       = "${aws_iam_role.worker-node.name}"
+  role       = "${aws_iam_role.worker_node.name}"
 }
 
-resource "aws_iam_role_policy_attachment" "worker-node-AmazonEC2ContainerRegistryReadOnly" {
+resource "aws_iam_role_policy_attachment" "worker_node_AmazonEC2ContainerRegistryReadOnly" {
   policy_arn = "arn:aws:iam::aws:policy/AmazonEC2ContainerRegistryReadOnly"
-  role       = "${aws_iam_role.worker-node.name}"
+  role       = "${aws_iam_role.worker_node.name}"
 }
 
-resource "aws_iam_role_policy_attachment" "worker-node-AmazonSSMManagedInstanceCore" {
+resource "aws_iam_role_policy_attachment" "worker_node_AmazonSSMManagedInstanceCore" {
   policy_arn = "arn:aws:iam::aws:policy/AmazonSSMManagedInstanceCore"
-  role       = "${aws_iam_role.worker-node.name}"
+  role       = "${aws_iam_role.worker_node.name}"
 }
 
-resource "aws_iam_role_policy_attachment" "worker-node-KmsKeyUserSsmOps" {
-  policy_arn = "arn:aws:iam::<ACCOUNT_ID>:policy/KmsKeyUserSsmOps"
-  role       = "${aws_iam_role.worker-node.name}"
+resource "aws_iam_role_policy_attachment" "worker_node_KmsKeyUserSsmOps" {
+  policy_arn = replace("arn:aws:iam::<ACCOUNT_ID>:policy/KmsKeyUserSsmOps", "<ACCOUNT_ID>", var.sensitive_account_id)
+  role       = "${aws_iam_role.worker_node.name}"
 }
 
-resource "aws_iam_instance_profile" "worker-node" {
+resource "aws_iam_instance_profile" "worker_node_profile" {
   name = "terraform-eks-worker-profile"
-  role = "${aws_iam_role.worker-node.name}"
+  role = "${aws_iam_role.worker_node.name}"
 }
